@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tip Top Fashion Collection</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #fff0f5, #ffe6f0);
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(90deg, #ff66a6, #ff3366);
+    color: white;
+    padding: 30px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  }
+
+ /* --- LOGO STYLE --- */
+  
+  h1 { margin: 0; font-size: 2.5rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.4); }
+  h2 { font-size: 1rem; margin-top: 10px; color: #fffde7; }
+  h3 { font-size: 1rem; margin-top: 5px; color: #fffde7; }
+
+  nav {
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 0;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+  }
+  nav button {
+    background: #ff3366;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 18px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  nav button.active { background: black; }
+
+  .color-buttons { margin: 25px 0; }
+  .color-buttons button {
+    width: 90px; height: 38px; margin: 6px;
+    border: none; border-radius: 8px;
+    font-weight: bold; text-transform: capitalize;
+    cursor: pointer; color: white; transition: 0.3s;
+  }
+  .color-buttons button:hover { transform: scale(1.08); }
+  .red{background:red;} .blue{background:blue;}
+  .green{background:green;} .purple{background:purple;}
+  .orange{background:orange;} .white{background:#ddd;color:black;}
+  .mehroon{background:#800000;} .pink{background:hotpink;} .grey{background:grey;}
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap: 20px;
+    padding: 0 20px 50px;
+    max-width: 1100px;
+    margin: auto;
+  }
+  .gallery img {
+    width: 100%; height: 280px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .gallery img:hover { transform: scale(1.06); }
+
+  /* Zoom Modal */
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+  }
+  .modal-content {
+    max-width: 80%;
+    max-height: 80%;
+    margin: 80px auto;
+    display: block;
+    border-radius: 10px;
+  }
+  .close {
+    position: absolute;
+    top: 30px;
+    right: 50px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+  }
+  .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      background-color: #e3f2fd;
+    }
+</style>
+</head>
+<body>
+
+<header>
+  <div style="position: relative; max-width: 1200px; margin: auto;">
+    <!-- Logo Left Corner -->
+    <img src="4301b89c-97ca-44b6-b281-befa4c02eb3d.png" alt="Tip Top Logo" 
+         style="position: absolute; top: 20px; left: 20px; width: 80px; height: auto; z-index: 10;">
+    
+    <h1>💃 Tip Top Fashion Collection 💃</h1>
+    <h2>Add: Nagloi, Near Police Station —<br> hamare yaha sabse sasta item hai or Qualtiy mai sabse badiya hai <br>
+        Mobile:. 8851713063 / 995398555 ek baar jarur aaye</h2>
+    <h3>Hamare yaha har Desing ke saree, Gown or Lahnga rakhte hai💐</h3>
+  </div>
+</header>
+
+<!-- Cards Section -->
+<div class="grid" style="display: flex; justify-content: center; gap: 20px; margin: 25px 0;">
+  <div class="card" onclick="openTool('calculator')">🧮 Calculator</div>
+  <div class="card" onclick="openTool('clock')">⏰ Clock</div>
+</div>
+
+<nav>
+  <button class="cat active" data-cat="saree">Saree</button>
+  <button class="cat" data-cat="gown">Gown</button>
+  <button class="cat" data-cat="lehenga">Lehenga</button>
+</nav>
+
+<div class="top-actions">
+<!-- Map button opens the provided Street View / Maps URL -->
+<a class="map" id="mapLink" href="https://www.google.com/maps/@28.7005924,77.0508899,3a,90y,230.9h,84.12t/data=!3m7!1e1!3m5!1sBRcW6VRhpWCmZXuoPu-Kag!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D5.878658219688617%26panoid%3DBRcW6VRhpWCmZXuoPu-Kag%26yaw%3D230.90369563047486!7i13312!8i6656?authuser=0&entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">📍 Map</a>
+<!-- Image button (opens the provided Google Share video link) -->
+<a class="image" id="imageLink" href="https://www.google.com/maps/place/TIP+TOP+Collection/@28.7004873,77.0508629,17z/data=!3m1!4b1!4m6!3m5!1s0x390d07fd5e2a2111:0x96f9fdfa65f42c69!8m2!3d28.7004873!4d77.0508629!16s%2Fg%2F11gxx7j2l0?entry=ttu&g_ep=EgoyMDI1MTAxNC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">🖼️ Image</a>
+</div>
+
+
+<div class="color-buttons" id="colorButtons"></div>
+<div class="gallery" id="gallery"></div>
+
+<!-- Zoom Modal -->
+<div id="imageModal" class="modal">
+  <span class="close" onclick="closeModal()">&times;</span>
+  <img id="modalImg" class="modal-content">
+</div>
+
+<script>
+function openTool(tool) {
+    if(tool === 'calculator') {
+        // Calculator ko new tab me open karenge (ya aap apna calculator page yaha link kar sakte hain)
+        window.open('https://www.online-calculator.com/full-screen-calculator/', '_blank');
+    } else if(tool === 'clock') {
+        // Clock ko new tab me open karenge
+        window.open('https://www.timeanddate.com/worldclock/', '_blank');
+    }
+}
+
+
+
+
+const products = {
+  
+  saree: {
+    red: [
+      "https://m.media-amazon.com/images/I/71zD6LNDRdL._SX679_.jpg",
+      "https://m.media-amazon.com/images/I/61t5Rq80yeL._SY741_.jpg",
+      "https://m.media-amazon.com/images/I/617d9lB90xL._SY741_.jpg",
+      "https://m.media-amazon.com/images/I/617YAcTci7L._SX569_.jpg"
+    ],
+    
+    blue: [
+      "https://m.media-amazon.com/images/I/61oBB8q1FlL._SY741_.jpg",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSuLzUWa6UZDrT1vSRgt68CZSVOYIxuAl9Pd18p8MiNsuqPUuL2MhlgdDnbNcJeQPxFaPzDoLWQSpuCYAUzM-UAN0NKEuPhS1HM3nlEVOvG0my6nkLFSJK86A&usqp=Cac",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSKqdcCBX0hTNNGopmqocLnZlvrFgX11rVh3xEltUKbhDzjeoEASJ8027p01x14UpqGwD2hQLlkuEzEaCKQESYMj9rcxCx9yTM4IL-ZtLplq2n-y93RCrBjEig&usqp=Cac",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQyqtUGj3Tc2EG7GYmKBiZRYJf1MibP3c2_4clRtmAdcLRBAyR1nd4y9kogW1EoQj5V_TJmLEezz4AVc0hHmtZyjnsixsZcmu_pEvij7Lv43gZjliJZENVkHxs8mW8LkXz2c5adZevqGyU&usqp=Cac"
+    ],
+    green: [
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ1rc2-j46Ngbxfk6Zeat8fbXeRiJ2bzbI1zpYkwtGx8ELNgPnf0BlWMTY6ddwqNzVYVR5xo4r99aANJb5UaW6lP4wpNv1pQKU5ilbGLJokiYO9eDcrMMPQ57A&usqp=Cac",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ7-fB61n5mIOIqHgEBO80EaSs3HAc0Hm_fHAIOVKTZP_IURtR1n1IqnW7iscE0KYBRMkvnxx_futbiW4smjOGVRTFM9BVFLpQqlq49VU8m8EU--qflBGnXCdE&usqp=Cac",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSNUoyKYTz6tWIcfee9VMqCDIfu-MEU_Kgdd872cU668DqzmP7ZN9LkLe6ptV9dlztTXJYrFAsXQfAmbM1OImmE3uu5ubYL7pRWGGmeV-w4",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTks4YcybVlMbITyTbxBEearyet-_xAQMpVkjzoNnjeaE4NvZCy9slbHNgcBKTuyQrdm2pNeetwQXs1QuU0SDhqW3xDV028qUkY7GM5p9hd4P9XpwbrtwWJUw"
+    ],
+    purple: [
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQn0YKzQmeA_j1oZP1hNI5x0tOPGWgC5slQ0Pcs2CDMSCnddNWFsQOXBTVgrgrGdqMMFu9PGKWL6SQEPBrNYGPmzopAO20dAuQniIOE0n3SmPoN-EbVfGGayA",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTnBPqcGSFb9irSUMS29pQXkdk2kgj_mtpTECnYE-YC5ROg5rlEcHyYwLWe9r8Hdm9lUmVH3z8SndcLhcDDx-W-O9WhLAF2o2i5CATd_xn8",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQrv944T39ePj27tmZlfAvgsG4k8ezTH0cth2aN_6OxSM1UKpZGP1by8AYbnToO-Ov96cSUtc2TpIR2Zl0QSb4acgWzAomq5quTd2XR5PtKkp2NAdWXUsxvdw",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSDO_JEZYqua_2rXEmwuc_SyiBaenAWeg87GMNUkDbtJ-_GKFXpw6UxeAiFgt2N-K17o5M1CaStTc5-_bDqHiFl2d1kZiEdBmwCnqlxGio"
+    ],
+    orange: [
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQAaWl2F4XBpyXnw7AoL6H0K9mzcdhcT56UIOCiprfOf2DcG8VmG1SahicXAImiBtXx8-uJjjOg1I8saH826lmNWKT-fi-PvlWWccwe7AEp4ogcVEYt4bXUXg",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQNbhx8AJw3Ukvsq3j9DI0SDL9sGYPDyJrX5bPh2s3HXhFgHDj_I5BOI8Vno9kpW29_6R1vCLD8qPwTKnx3_u2Zih0_n9qTwLCzpieLwnMD1WO9xuQ2luUV",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSmz8hrfNpVE3ZGw2P-qaISM1GVg0PwswnND9wjbwpKg9JIWaFDA8TNIjpYiTTDBrVyD_EgHJtxphhQRpjUpDBfGrVJuQ2gafDeEhSJ8zMJc0_uqsbCwafZ",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcR-Wfr_4vnIdwWLv8olW7tWkHyzlB86iMYJ7KIdy5RCtmi24SRxTQY-6WpfsefsSfbsFELwN6aN7_G2GpAZuOamGoaQMPLi4OPqyoZQI6buOKSyvR7Unn_H"
+    ],
+    white: [
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRhnW4FrjWuro8m8gM2DieLOfBrZ9EjBAbjTqg-DScuC3Gfgu7Ah1vuSDCggE9d1GXAIM3f_WFnk__-9BqoM4nF9A-CEwM5IAd9u6b6akU",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTUE7P705DfU8dstxUdlH_37GS53xmdlhvxbPvG01vUraqurAYHuhptFo7X9R6n3yfA0Lcgd3VbBKJY4dRlvVBgD_lOW0cbi4De2-Z-QxlfvkQd49tNqi4s",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQhiqz4oROeLHMoc_dQT_HglIP6BSiuGqVjKFogWB0c_KkMqAMFR1GLD3yUg8puH9Yj90ESA11qz_dov7k2Zh8q673akBbf2gfQptgw-ja7",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSKr3c_Ghfp7WlT8pKmGQ3pXBIR0LbU9_mNIkk1k6psXHwe-1NP45D8geI7SMCyqcnbF7lQjo8AIl8Ny8LNW6mmGvGjc6f3fp0P6g7K2WWRHKziz8y6tOqT3Q"
+    ],
+    mehroon: [
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTyw9IAMFb1KO_KpFYdfgrquuTG87hstelDi8bna9clB3dxztNBUA2_iDZQNlM-d-NycPsJJlfkGX6BF5vhXIYhT8qT1TjfpR7K4po6TO43RbsoHKg-hxtN",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT3loEHjEpuPgfp7OsRYEGZDYg62e6d3VuOoh8qelZd14-9bM3TcblM5FSz3w1JfPW0c6QKUanCpjEVm-XSRf-UmOWNIChlTp3BpLyrLZCet54v7t2Dk0ej",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQefbp2_9EjJ6LqXSoEqpM_Tpg67QZer1mnCdnAef5FHvQW13VMYN-cfIwo4S_MbkGTHWTHS_pl86_k6r1g5sGSiF2Z1X4rrGxNXwKz1kAXBSdR_VAgqee-",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQ6ti8I1_vfupiHFh3KpFnte6YEcf2HP8tVWma7AweOW9ktv59gvlMCXBdIwHupIVXUhRimrdGWza1CgDTf2SZQvB82GDsg-GNezS6-7A1_ZAWVVtYKjAfXwA"
+    ],
+    pink: [
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRH3_5Rxop6uGzHqhGbTUw9GmLQbr2qmR6w9L4NqCoI62ksAhCAzXjCv8-VbVTRSrYDzIKdoM267TOIq8QJUYrrXjnfKgY9C5HTTwBeZ2M",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTW_x8396sLohnxfsbuhLYS6sheUsG_ffzEe7jjE_W2WBIgVU4QvFhVsIbqm7iUnmK3YHncLUOPnnPw7V3eGXiA7MtD3URBmoIxiyMzM1LnQ61IEqgUej3b6A",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRfIBe9Dn2qLzkF1ex3ERWrwnTDp0VmoO0GKrEstdyGZ1392uhgn97CQB6UGUGI775bMx-lXWRxzxcDeq3G_3q0b15w-IKlXobgHk2z6PK1P3LFjMSV4lyl",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSYWRTMPk-uMBI3YJPOpfZDVqEF9SKIr4znK1z2ihRaxuhhO1urxmyg4jQEWmVSolVg_CTz13Mfj9do58GQRJdzkH2gi1kJHPHQRmzQy_k"
+    ],
+    grey: [
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ7Nbe2Vx09H8AeqZdIRtx-67mKWQ8XTiOpUN-NElKlWjdA8-yk-xI2EpbuApeLp8-zoSPkQwCQJq5aW_iND7y-J3jfrgffp8aQxwCAE6E",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTysAINRPMvYnxI6_A3lzFtxYOrNZaVFBPaUCrlJJS8R656_LzPFRTAhu7c7njckBwHaQwPjrvgLAt-9T393svSHZbJoKwNiBQmORFNIg4",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQv2oKqEutiWp9sssEHCSq26gOYEuywRWECDKYhsYN2495FfZ2fkEcGSXOaReQpcvj4ysuGHS7NHI15rM-AxXvC--q3e8lUvZI_wOJbxnxO8SIbphGfIXg0",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQel278a_CQ5xbszFG0UahCpj3_QcJS1aoYTK6FlStvxprK3KtnZLfk_IMei5Wn0DSW8-69lOjEFrszfjE2Q4y0vbeFarrckO9qEEcV73K3tYXYKZcX0auhpQ"
+    ]
+  },
+  gown: {
+    red: [
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ7eddXEMS_NAa7XN82UtXXtRivyGjYUlJ9gJ9dnWss1xS9ueQ-Jid_mpbOhWjoklgvoNm00h_0ODrSfQbmgbOxpL7Vgx-zr3wTJo6WgJ4",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQrNZ1bE0Bb4W0bZLEgmmt2Cy97dBkqykSNe_7yFNXpPdv4mpdCOqqhAic8vFOJpZLNM2R-JwX9_0pCed18jQ6VXf6JUbl9dgwVQ95WUDRw",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQXaF371U28MZ0pRm4vtVb8fsJqw10e_2VmtRoMcxIEmf_oCC0P1QUrK2FGHNtagzF6Hs0fPaf9QRN8a32gereC5ynvXFReo0Gw-1EO6RRX8xioiMneGfaQuw",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQRA4fggJ8pB2LHMuMPwlMbLf8R2FvaiU8G5kybQD0DxUMwPQz7c1bG9OnXTX7hJ33g4AMiQ6TqKWS1Yu5yVb0ybTU-fBH2HurDDaCvr7dl"
+    ],
+    blue: [
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSnByft7BUOIvgXrlnTqZt9p_dEPAT8_JARqG6V-xbw9kLI0jwxTpEMfUZvf_WR6VNlZa5vhEMm7s_bEhqaG5VERE1-4ks3WHBMK8i3FrdHQn8OTNn6gVU-TQY",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRmOEKb9lNJAhK5hIcZEGsksQ-M2l31LJ4HoxFVjeId4AG2_tDeAc1EvYLusKa1bM8snYti29OPUtu8Fo9v71gIqssCC_XfOEqqKeQ4E3qm",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS64pzoAi4sIqe0NNQgtheyNkW5lucalQU57KVCDQK3qsXKstmYErda1_ihv0hR5739NjyzBxcER-GwuyU_zq7erLLcp1uFPmh7azxzXr8",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTF2xuYP1Tln2GcPI64mDnj9Vy0YhFmXBrmSZOt25T2yYfwiczqZrt1ubOH18qkYh2qO97kfL_Z_sJP2vQOPji-BWpXX9iGekjb25bUke3PzJ8-B35dmtyh"
+    ],
+    green: [
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTvorGasWcf640SCH29PIJdqrXkgNPLbUt8rklxaCX0UbheyY61ImtJydBvYOsTXFu3_M_O4uQNfPoPZv_ibj_zHFnBZZBrJlwqRvV7jaQ",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRd6bFMP-ny6MppD6EHB04x4e6muashuIxRXX90ykYBbHfNffTfxwyEyjYp2cYztqDF0yqhd6TcPUSMonAQ6n-sgj52190ZQw",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQMitSj30Z--UrBMsIVJA3ZJ4VFNxKdh2xPNHu3y91NUof0XtyDKNq5d0Bt1ZZNALzPYsIHu1yTf3xv3kySVEMYFQnNaAZJuMxluWzK_HrHCh9qEqiNf9IPyw",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTWBYj8aLTYf_OGD8niv_SN8oHun2dRvrVAacafGtb321OkdByzXK2aBJg7qJOYMHTIo-4KY2mFc-A--GJ4Tjhl_m2RqtrP6Zt99FAPEzonI656NjqfYFEs_Q"
+    ],
+    purple: [
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSoCqtsJFRLRYKUdK_TJYTwokHCd2JttwSlGlEB442kWqbfD_T9J83Oyi06MgbYjeR4jRmb08dVHLz_1-G-3lt8tGAtFa_WgGXIOL6Tueve",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSQeKtef7E8TX2r8QWpxX70fKxNyPwDdepFBXKVHuuM0Gbz9PP0vYLFXKwKAOKJMiDchRcHi7LsXtP6wpCJ1D_85-4i5Ryy1DruBdHjjCqZpC1SbD-Pi7RR",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRW-ZWlTm1rlGK_lZPeEhaV6A7o_YUmSZR5o86jso5ibQl1zANH8MPZvjCtoto0s8jaOeBuG8Q03d_1jgQRyYlVhOs7cndE",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRrfeVNnb0jOX4WSkiqz_EIlW2CoRI-TjP2B39pHlxsoQ9HdBbFcfCI7La-ipDOVj7E8wQCTrYDoni6Ntq44pbT32415KNdCw"
+    ],
+    orange: [
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQn1wQ-JBilqo4aPQP4iccLJaUrTwlufGeCanE8KcUYrlB94z5axAiNz4YR8KRz_sfR9t1McBRqonupioZl5uz3xLj2GG4Ay6jtxiISesM",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSXvMawH8hb06Rcj0BjHBYA3ufuKZa5283q4HGS96YBkzmFnmalNPzll1qIAjDNBTVWxAaW2JtcVorC_cS_g29TR-0CfjsJ6h5JSLQkQZyDhK2ND5Sm3xj22g",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSKU1LDsxhbRM20b1uKsCpz546nHEp6ivYf6jTINQ3Hbjdg8MPRkWQULAG5RHomuiHiWNNMfO9_qNrlDsRSLUjMBSACrQ6MFakneJf8yv8i",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRIQAerAaG44PLyKuTRQs6v9QHKFYtro0axvcfJIwkvh5x33Y0t7cUb9qZr4xX05A0Qsu5ty7AknEteRoSDNuN8vjFa2dTm1SrV_sN-u0tzKmsxb6lfs0iUcg"
+    ],
+    white: [
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRnZ0X6Cj3-wnyy8gWPa-DLAZk_vLqyXuW3GciEdQhm4U1PcjV-TZTJbTKpsKTlbQw1EhJUHSbm3s5DVDumfNViF1pK5s3HU_WTBMG7a3tPOKslis3vLnvnJw",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTrqA42mkUATOlO8Eb3BeoTqeJb923Y04lBqPOq8fUXJsjxC7AoOG1qiSwhuhx-_YhMzHicai6npxUPbslMIO5nSW3EoH1s4_Y9P2LH1dvo",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcR6gwynq_-67mkQRLNJTtfwfo9_8i0dI5BVpPveZCLMPqUVVb-mo0fLCKLGdjUEpTTk0yrC0qFdUX_nmsTQdWpOPtzpzKhrmB5oTUeWZ6vcC26SMuv8PSFQ9w",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcScoP4QLQE85OSSbadCEw7DJ0Q6wSQ4f3iNu8Q2hsxNgkFqTCfmaUpvuttHU1WOQkX8OxOTvYfxVy9i9QT8h-Q2KKMU2_vgOXZr1rtwaHc"
+ ],
+    mehroon: [ 
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRx_v2xYcqXl3V5GSTMMi3SNn7UcXlcYE46DRgSrZpxE745OOXdlDJY9Q0z_gGPE1YTrEGAU5hUjooocgZSlRL89QtJGSQK5B-sIzu-IWfzkM4kE7gWx0T4",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRzafBIfcPp10d7P1E622qvP4z4xd9ki8C94sp0M4epr_xXOifbIOg4OUXN9NAgyeoA6A-5iju40zUVl1HgIcR0c8aMOvWh",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRUsZ41_aXJNnOifjR_uvu4LqwcsPZ7zW84JmRCHzt0wLGdKnfsjJNdIhhFNRaw_s_HHGLhmuqeRE4ZVPSOQboU0hxj0lxVaHYIK9HMU89a1TMPd_mXY8sRaA",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQi1IztNjJH0n1AXhl2RJmqGX1C5HpBCiBRj61qNfqb39AfQbpIMmm2GZB2OqhN5vcm0wnOvXz5QWgVZAP6geuXJPGijtgdJ4PGnR1zRkE",
+      ],
+
+    pink: [ 
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQP3nP6PjNIynHi26WeMfV20fpGrWB_UaD2VKPWbnYjaiF6qRl6KDQ3kxCtlQUCvarRTQRAvthRu_jKreFxFfGiOwCdBVbhDhQhOP4pJ0m3jXQ7uaCqpGTj",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQDye82O_ogidffvPwILhHMQ3q8l-dfCfN-lnJGdHgW4m5Vketoqqd33y3toVhHHWFa4Sb-jz4f_ERAvBWv9Gch7g5u2fzuwbCvUABPARiymfbdxv8B8IRt",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRAVUUz2qRmTIr4T4MQde4LQET29-4RsTgQIh5h6ZHv1g75RGFXbA3etDkJbyCmEL_CKZ1j8cFCSNW2POqmyYVtw2Prhbc-DbnWEn1Yo6DRM4Bi6HrMtaDU8eY",
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRWhkYxlNE-nlbHLxXkbNzA4d9extV4B3Hye8kJfCgEku7XyLdnBDdw_8SUMRCVfIgsWUNFbM84QL1AsFoslAZloFK5NK_IHVpS9m5gLaDqarcyB6NhxkoE",
+],
+    grey: [ 
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTNsrvxHfEj_v3tX8zf8XDnQtOaJapg1ImT0bXWvxsD9X0P9RVa2Do9IWt9ND41HK26ME0P5Tuzc_CUygi6LmW0Db5w3DuRALdUndi6BB4",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRmnhGPL291axmd_z6y-aZTd0Bp17mz_bA5-bjXv5dyezv_DmjhrWcObU4gCOShuLHKraJYiL3dkQ5k5WpAxzjecnKph10v18a5YW7390Pn",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcToGZw9DQMwNWNENQldZUoDExqi3nWH0GqXCn4GFmwk5TuXoRPtpdSruN4E0rbRqth8b1CRLcI1XmIl6yVNP02xFi3da4rCUaQNgEIcyQ10Wogtx_jZy6uy",
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcQ8vJ-eVl5WqM9jODusZu4oS4A1CJrkI3OAtLMxVboh2QZgeLRtyzbZjsOzPgj2x79fD1lOKIJ5yMGJiROeqK_tPECLGmXjxYLh1G3SeQAR",
+
+     ]
+  },
+  lehenga: { 
+    red: [
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTh5-xcy2WvZE6ZCcvIi6daVYlwmJ7fq2sSSBiqlkcFWTecpkTZG9ByfliKremTmgvvI6xWDu-mTbU8GHsney7Dg02UHdr4wPpFMd6lMshB",
+      "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ-anMfPf4J0zPKsgyIREUYOJuBLn9Z7yy2aHa-dedWWNujfY6AXEoo3C-bGM5mH5SiV5qje82HxlMc9_jJb1GNmyK2_oCd",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRjUVdMhRgyUBwJ1MTQfSvIifklxzJRCsA65WMRlss9vzun3KmBsSo4O0vfoUB5yzSpBm7ALQEqRDP78nDX61yaHGjkeU07RDy7JAif7rxh",
+      "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSl-jwp59W2hTHsw6Hr3oDEB67hSaQ1RVw9xYiyeQDSXphMCwglDxJpzpORiLEb9ekYwu-8ZFq4K7qPTTUDv2g0o8kH3-ck4afNQdF9L7dW3jCfWWJcjpubrw"
+    ],
+
+    blue: [
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRv23QTmi58SdH8T06SUShFsvX5hk3rHUfst-7Gz2uyfaK2Z8SE5w_oK2IN4I81os7w-3PwKqtcB0RsoY-k_Xl0eOT6JewBOC0GnNBpMGoqW_ovdW6DNav2Tw",
+    "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTDv_OQIt-M-d7B6JC3SkHYKhnx4ettYXOi3rRYct1k7gHeadgWp4H3136DG2phK0qQGqJ58qCe7gD9pUimlw2uYxT6Sec7Jw",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQqGBJfkoL126LRCqN2xlXjee0Xpz2-U_xRggN_sF2b9FCGqGCmCPtn30eEi8f2l_2fyb2zKijRK8EscowgE-fNER39Wj-a_FsMvBR-QVkw",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRGPLkd-K-Hhy5luxLOBPOzFCZFJY_VJa2hYVGx7pEi6cyi_w_AmKwNZxCwcvIc-AZ3YP--q7hwFKcdri4vmySKfsmiEefVKU5WTe0eM2p6pQiMAoxZksOv"
+  ],
+
+      green: [
+    "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTKV5eG9JkaD4506x3Sp-axOOISPmBoM45-gJIUGnCu11xfYpU3y2m15El7USvWvx917TNfHE66SQLkkpWg8HqJ98sYpV7K8k-ZgfcO4w4A6gxFIfM21de4LA",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQtSBPO5RQG9vAwF5RJImYhLmHfGNQ-LBaGfrisWOMAvoLlh9cu4V-_-5ksyyD6db9-O2ShLGpWrD5Pw7uily76AyVdD6_uApj2jQWJaEBDulcukBN5KL1vNA",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTrLUBMtl4_R9iqM6GSpDqbaFwVSAVujHevxDfPtr8xW-BDDM5nelduiuOWqtrP-nSf_wK0_ntokhgD3yTF59mqZjYr2Rwwad6_imnZsR7h",
+    "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQaREooVrRtqCpIv7pNbWMforwZtxdAzh7Q8_GF3KBLnya297HmPk-dbQBVfANXNASCI0TI8yDUHMtS3a39hiI9imtfqcuMHnAviCdO_Rt4xkCym2L4BtgOdg",
+  ],
+  purple: [
+    "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSIGzt9ZOXGx5OkbdBbimawb62JZpq4A1sEC_kOzWf9hMTiGXR1Y3XfIcsZ61NN0qqpDO4AQpaXj8HGT7NMzGu3EwOFxKSzfmrEKdcdTrJZReIcSc3WbtIshg",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSAyZFYsMUFJWWc4kDaeZM1jGo8Ksy6APII7mfDEv7tf3OeinuK_380_7cUdkyuEbFSNxZW65Jwm6EDfg0kmig_y3GZn8bhXXAT6ORDtWBK",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSh3gQBrvzMhkJF4gH5Xw8atZNd1qP3l0FGcGmDji372aI8YURKIs_gS5Nk99F-tvhAvVuEUnnrCjoTQ_6d9XB6bIni3wSWBFRxWFQvtBo",
+    "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSx1HIrRaWmT525mhy314cWczKC5p_dLFxu5dWv8085vnCSG9ahEXWNkqqbpAAVbSPjVygrPWqWEpdO7wnsGms4nsOpAlni4UiddYSjuJgh"
+  ],
+
+ orange: [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQQRTjqcncCibiGZirC1N4p0AJtZUcSRKfUg&s",
+    "https://www.riccoindia.com/cdn/shop/products/image_2514b81c-dc87-4d7f-bd5c-2fb0129ea44f_1024x1024.jpg?v=1642154123",
+    "https://manyavar.scene7.com/is/image/manyavar/ULB4619V_418-ORANGE_101.3907_23-12-2024-13-48:650x900?&dpr=on,2",
+    "https://5.imimg.com/data5/FQ/VO/MY-45748038/orange-and-pink-color-wedding-traditional-lehenga.png"
+  ],
+
+white: [
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS9MTfVfhOp_7rarhUKZr9lIeZOE-c1AsWO-QQjdFhBpgAaK70dC5sXe2qAu3pVasO4rwUatLd8Cy0Qy5doqeCVcZeuXY6AkIq-1KCMKCnMOmj0YdqgOn7H",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSMuaC0gGFwXQBRYoe_2nGngCZ32K2ozntL5QIZBNMao8A8Cp3R9xppgDiqjv5kopkF8VWQIArubRXNqoHk5IEFz_qqJdLWUMHelieXkFc",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQj0X-wUVuJ9bmxPOxZO9qYUXFJ_MaC4ZsSIx-4icq0SFcwMsKposMlSnIyIx-u2-Op5ZfmDsKjjgTgDNKex_zFyw-y3NJwfw",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcR13Cu4s9gR-CTJzknYyunyxcxcmW5Be-Zdr-O56zF_q_9QGzQpczlFovb3hGhFrAAC8V_i0fWAOEDSJ21id-JPrrgH2VYKDHBaT0gWMpfo"
+  ],
+mehroon: [
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQYIXOaJJG2I4PkYimMFVL-DQYf61cSo4tzwXwLVTbmQJ5QOOlPnatqCJM0NL5rOhD2PqXYC10gu9lLmTiz3S1C-8GcvOSxuzUTjKd1bQtZmQOBF10OvjhL",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSWAs1AbPuTI2FwHLiOPJEHFdcJPEmiL3RP-sZr4ncL4f3wdlDvtbrdNQ69uENyZdp_CtmsbQ3tLq5cj8h1c71K3aC3dsL-1z-_fJ8ebh0LJ2EOAFCjNaWS",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTSSYNefzE40AMccjSgfO0byl1OHonenHwc-qtlxxnhtRmduhTf4ghDWLkN-7HzMd3qCLDAr6tg1F_7xg7PEzjfGbNZkcR3cRBPWaxtMl8",
+    "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQnO7ASNKuewf1dOoqWyVPydXeuBOhqOP7xguSfSe5h2zHiS9jmQIz6MxGwBlR7aOc5kQfqwj4jhHf8VsoyUtO4RXKxdqHGICvRprgN8VS1",
+    "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS6dAibwxK4Hj9LOBiIRwQsgELUZ8awo7vhPFAx0O6X_WxqysDZC0LARR480GupOkkJ2AbSXKSkXSfH4mvHRiVpMi_2dcNFPFP15qPffbYa"
+  ],
+  pink: [
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTXIE2y5n_E38ODuXMy3fnE7PmqE0yrgi0eVsSM5waHijNgLRHIg-uKhwv4jhtsXmTsPdLnyaI3rOmvA3PWxBP-OQRLgXLY1-2yk9OZY7yI6dGWqwk9-Xn_Fg",
+    "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRBJ8u2FA0wAhxmyq_o5P_O8JhN7B6BgBQkJGCBTjHhGVeXOXuj9Jfdo45TK_Da1sOLvxCumBTLabaYIuEa9cZusH_tQXGQqURfGRJVM_4",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTapzPfRSH3d46vwqSaEyD34c_rnubIQ0wJesFFZsP0JHCRGQBlkRAmDbMPID2LOYx7wwopvoQWiH_UPOM_mgyxyTbFPtE1_r2YE8245_hv",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRDCbqoFbo2tSPcWDVKFU0WN0kwwrCTfqpvANYw5MzpR_HD0-hejYwjtf4ObBpDrqZx51CHeaaiQPjwzpYU-8SH_-yrVkRsqJRs-hLUCOy4WEcAjt5KsDMB"
+  ],
+  grey: [
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTh5-xcy2WvZE6ZCcvIi6daVYlwmJ7fq2sSSBiqlkcFWTecpkTZG9ByfliKremTmgvvI6xWDu-mTbU8GHsney7Dg02UHdr4wPpFMd6lMshB",
+    "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQ-anMfPf4J0zPKsgyIREUYOJuBLn9Z7yy2aHa-dedWWNujfY6AXEoo3C-bGM5mH5SiV5qje82HxlMc9_jJb1GNmyK2_oCd",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRjUVdMhRgyUBwJ1MTQfSvIifklxzJRCsA65WMRlss9vzun3KmBsSo4O0vfoUB5yzSpBm7ALQEqRDP78nDX61yaHGjkeU07RDy7JAif7rxh",
+    "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSl-jwp59W2hTHsw6Hr3oDEB67hSaQ1RVw9xYiyeQDSXphMCwglDxJpzpORiLEb9ekYwu-8ZFq4K7qPTTUDv2g0o8kH3-ck4afNQdF9L7dW3jCfWWJcjpubrw"
+  ]
+   }
+   
+};
+
+let currentCategory = "saree";
+let currentColor = "red";
+
+// Function to render color buttons
+function renderColorButtons() {
+  const container = document.getElementById("colorButtons");
+  container.innerHTML = "";
+  const colors = Object.keys(products[currentCategory]);
+  colors.forEach(color => {
+    const btn = document.createElement("button");
+    btn.innerText = color;
+    btn.className = color;
+    if(color === currentColor) btn.style.border = "2px solid black";
+    btn.onclick = () => {
+      currentColor = color;
+      renderGallery();
+      renderColorButtons();
+    };
+    container.appendChild(btn);
+  });
+}
+
+// Function to render gallery images
+function renderGallery() {
+  const gallery = document.getElementById("gallery");
+  gallery.innerHTML = "";
+  products[currentCategory][currentColor].forEach(url => {
+    const img = document.createElement("img");
+    img.src = url;
+    img.onclick = () => openModal(url);
+    gallery.appendChild(img);
+  });
+}
+
+// Category buttons functionality
+document.querySelectorAll(".cat").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".cat").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentCategory = btn.dataset.cat;
+    currentColor = Object.keys(products[currentCategory])[0];
+    renderColorButtons();
+    renderGallery();
+  });
+});
+
+// Modal functions
+function openModal(src) {
+  document.getElementById("imageModal").style.display = "block";
+  document.getElementById("modalImg").src = src;
+}
+function closeModal() {
+  document.getElementById("imageModal").style.display = "none";
+}
+
+// Initialize
+renderColorButtons();
+renderGallery();
+</script>
+
+</body>
+</html>
